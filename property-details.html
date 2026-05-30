@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Property Details | Noir Estates</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="header-blur"></div>
+
+    <a href="./index.html" class="logo-section">
+
+      <div class="logo-icon">
+
+        <img src="images/logo.jpg" alt="Noir Estates Logo">
+
+      </div>
+
+      <div>
+
+        <h2>Noir Estates</h2>
+
+        <p>Luxury Real Estate</p>
+
+      </div>
+
+    </a>
+
+    <nav class="nav">
+
+      <a href="index.html" class="nav-link active">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Home</span>
+
+      </a>
+
+    </nav>
+
+    <a
+      href="https://wa.me/9613123123"
+      target="_blank"
+      class="header-whatsapp"
+    >
+
+      <i class="fa-brands fa-whatsapp"></i>
+
+      WhatsApp
+
+    </a>
+
+  </header>
+
+  <!-- DETAILS PAGE -->
+  <main class="details-page">
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+
+      <a href="index.html">Home</a>
+
+      <span>/</span>
+
+      <span id="breadcrumbTitle">
+        Property Details
+      </span>
+
+    </div>
+
+    <!-- IMAGE GALLERY -->
+    <section class="details-gallery">
+
+      <div class="main-image-wrap">
+
+        <span class="details-badge" id="detailsBadge">
+          For Sale
+        </span>
+
+        <button class="gallery-arrow left" id="prevImage">
+
+          <i class="fa-solid fa-chevron-left"></i>
+
+        </button>
+
+        <img
+          id="mainPropertyImage"
+          src=""
+          alt="Property Image"
+        >
+
+        <button class="gallery-arrow right" id="nextImage">
+
+          <i class="fa-solid fa-chevron-right"></i>
+
+        </button>
+
+        <div class="gallery-dots" id="galleryDots"></div>
+
+      </div>
+
+      <div class="thumbnail-row" id="thumbnailRow"></div>
+
+    </section>
+
+    <!-- DETAILS CONTENT -->
+    <section class="details-layout">
+
+      <!-- LEFT -->
+      <div class="details-card">
+
+        <div class="details-top">
+
+          <div>
+
+            <div class="property-mini-tag">
+              Luxury Collection
+            </div>
+
+            <h1 id="detailTitle">
+              Modern Villa with Pool
+            </h1>
+
+            <div class="detail-location">
+
+              <i class="fa-solid fa-location-dot"></i>
+
+              <span id="detailLocation">
+                Beverly Hills, CA
+              </span>
+
+            </div>
+
+          </div>
+
+          <div
+            class="detail-price"
+            id="detailPrice"
+          >
+
+            $850,000
+
+          </div>
+
+        </div>
+
+        <!-- STATS -->
+        <div class="detail-stats">
+
+          <div class="detail-stat">
+
+            <div class="stat-icon gold">
+
+              <i class="fa-solid fa-bed"></i>
+
+            </div>
+
+            <div>
+
+              <strong id="detailBeds">4</strong>
+
+              <span>Bedrooms</span>
+
+            </div>
+
+          </div>
+
+          <div class="detail-stat">
+
+            <div class="stat-icon gold">
+
+              <i class="fa-solid fa-bath"></i>
+
+            </div>
+
+            <div>
+
+              <strong id="detailBaths">3</strong>
+
+              <span>Bathrooms</span>
+
+            </div>
+
+          </div>
+
+          <div class="detail-stat">
+
+            <div class="stat-icon gold">
+
+              <i class="fa-solid fa-expand"></i>
+
+            </div>
+
+            <div>
+
+              <strong id="detailAreaNumber">320</strong>
+
+              <span>m² Area</span>
+
+            </div>
+
+          </div>
+
+          <div class="detail-stat">
+
+            <div class="stat-icon gold">
+
+              <i class="fa-solid fa-car"></i>
+
+            </div>
+
+            <div>
+
+              <strong id="detailParking">2</strong>
+
+              <span>Parking</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <hr>
+
+        <!-- DESCRIPTION -->
+        <div class="details-description-block">
+
+          <h2>Description</h2>
+
+          <p
+            class="detail-description"
+            id="detailDescription"
+          >
+
+            Stunning modern villa featuring contemporary
+            architecture, high-end finishes, and a beautiful
+            swimming pool.
+
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <aside class="details-sidebar">
+
+        <div class="sidebar-card">
+
+          <h2>Interested?</h2>
+
+          <p class="sidebar-text">
+
+            Contact our luxury property specialists
+            to schedule a private viewing.
+
+          </p>
+
+          <a
+            href="https://wa.me/9613123123"
+            target="_blank"
+            class="details-whatsapp"
+            id="detailsWhatsApp"
+          >
+
+            <i class="fa-brands fa-whatsapp"></i>
+
+            Contact on WhatsApp
+
+          </a>
+
+        </div>
+
+        <!-- PROPERTY INFO -->
+        <div class="sidebar-card">
+
+          <h3>Property Details</h3>
+
+          <div class="info-list">
+
+            <div class="info-row">
+
+              <span>Property Type</span>
+
+              <strong id="sideType">
+                Sale
+              </strong>
+
+            </div>
+
+            <div class="info-row">
+
+              <span>Bedrooms</span>
+
+              <strong id="sideBeds">
+                4
+              </strong>
+
+            </div>
+
+            <div class="info-row">
+
+              <span>Bathrooms</span>
+
+              <strong id="sideBaths">
+                3
+              </strong>
+
+            </div>
+
+            <div class="info-row">
+
+              <span>Area</span>
+
+              <strong id="sideArea">
+                320 m²
+              </strong>
+
+            </div>
+
+            <div class="info-row">
+
+              <span>Parking</span>
+
+              <strong id="sideParking">
+                2 Spaces
+              </strong>
+
+            </div>
+
+            <div class="info-row">
+
+              <span>Featured</span>
+
+              <strong id="sideFeatured">
+                Yes
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- AGENT -->
+        <div class="sidebar-card agent-card">
+
+          <div class="agent-top">
+
+            <img
+              src="images/logo.jpg"
+              alt=""
+            >
+
+            <div>
+
+              <h4>Paul Fadel</h4>
+
+              <p>Luxury Property Agent</p>
+
+            </div>
+
+          </div>
+
+          <div class="agent-contact">
+
+            <p>
+
+              <i class="fa-solid fa-phone"></i>
+
+              +961 03 123 123
+
+            </p>
+
+            <p>
+
+              <i class="fa-solid fa-envelope"></i>
+
+              contact@noirestates.com
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+    </section>
+
+  </main>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+

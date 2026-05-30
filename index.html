@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Noir Estates | Luxury Real Estate</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+</head>
+
+<body>
+
+  <!-- LOADER -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="header-blur"></div>
+
+    <a href="index.html" class="logo-section">
+
+      <div class="logo-icon">
+
+        <img src="images/logo.jpg" alt="Noir Estates Logo">
+
+      </div>
+
+      <div>
+
+        <h2>Noir Estates</h2>
+
+        <p>Luxury Real Estate</p>
+
+      </div>
+
+    </a>
+
+    <nav class="nav">
+
+      <a href="index.html" class="nav-link active">
+
+        <i class="fa-solid fa-house"></i>
+
+        <span>Home</span>
+
+      </a>
+
+    </nav>
+
+    <a
+      href="https://wa.me/96103123123"
+      target="_blank"
+      class="header-whatsapp"
+    >
+
+      <i class="fa-brands fa-whatsapp"></i>
+
+      WhatsApp
+
+    </a>
+
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-overlay"></div>
+
+    <img
+      src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1800&auto=format&fit=crop"
+      alt=""
+      class="hero-bg"
+    >
+
+    <div class="hero-content">
+
+      <div class="hero-subtitle">
+
+        PREMIUM REAL ESTATE COLLECTION
+
+      </div>
+
+      <h1>
+
+        Discover Exceptional Luxury Living
+
+      </h1>
+
+      <p>
+
+        Exclusive villas, penthouses, and premium estates
+        crafted for modern luxury lifestyles.
+
+      </p>
+
+      <!-- SEARCH -->
+      <div class="search-box">
+
+        <div class="search-input">
+
+          <i class="fa-solid fa-location-dot"></i>
+
+          <input
+            type="text"
+            placeholder="Search by city, property, or location..."
+            id="searchInput"
+          />
+
+        </div>
+
+        <button id="searchBtn">
+
+          <i class="fa-solid fa-magnifying-glass"></i>
+
+          Search
+
+        </button>
+
+      </div>
+
+      <!-- FILTERS -->
+      <div class="filter-buttons">
+
+        <button class="filter-btn active" data-filter="all">
+          All
+        </button>
+
+        <button class="filter-btn" data-filter="sale">
+          Villas
+        </button>
+
+        <button class="filter-btn" data-filter="rent">
+          Rentals
+        </button>
+
+        <button class="filter-btn" data-filter="land">
+          Land
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+
+    <div class="stat-box">
+
+      <h3>250+</h3>
+
+      <p>Luxury Properties</p>
+
+    </div>
+
+    <div class="stat-box">
+
+      <h3>18+</h3>
+
+      <p>Years Experience</p>
+
+    </div>
+
+    <div class="stat-box">
+
+      <h3>98%</h3>
+
+      <p>Client Satisfaction</p>
+
+    </div>
+
+    <div class="stat-box">
+
+      <h3>24/7</h3>
+
+      <p>Premium Support</p>
+
+    </div>
+
+  </section>
+
+  <!-- PROPERTIES -->
+  <section class="properties-section">
+
+    <div class="section-title">
+
+      <span class="section-tag">
+        Exclusive Collection
+      </span>
+
+      <h2>Featured Properties</h2>
+
+      <p id="resultsText">
+        6 luxury properties available
+      </p>
+
+    </div>
+
+    <div
+      class="properties-grid"
+      id="propertiesGrid"
+    >
+
+      <!-- JS INSERTS CARDS -->
+
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section">
+
+    <div class="about-container">
+  
+      <span class="section-tag">Why Choose Us</span>
+  
+      <h2>Luxury Service, Trusted Results</h2>
+  
+      <p class="about-text">
+        We help clients discover premium homes, investment properties,
+        and exclusive real estate opportunities with a smooth and personal experience.
+      </p>
+  
+      <div class="about-features">
+  
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <h3>Premium Selection</h3>
+          <p>Carefully chosen properties for clients looking for quality and exclusivity.</p>
+        </div>
+  
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h3>Personal Guidance</h3>
+          <p>Clear support from search to visit, negotiation, and closing.</p>
+        </div>
+  
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+          <h3>Smart Investment</h3>
+          <p>Helping buyers and investors choose locations with long-term value.</p>
+        </div>
+  
+      </div>
+  
+    </div>
+  
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+
+    <div class="section-title">
+
+      <span class="section-tag">
+        Contact
+      </span>
+
+      <h2>Let’s Find Your Dream Property</h2>
+
+      <p>
+        Contact our luxury real estate specialists today.
+      </p>
+
+    </div>
+
+    <div class="contact-container">
+
+      <!-- LEFT -->
+      <div class="contact-card">
+
+        <h3>Contact Information</h3>
+
+        <div class="contact-item">
+
+          <span>Phone</span>
+
+          <a href="tel:+9613123123" class="phone-link">
+            +961 03 123 123
+          </a>
+
+        </div>
+
+        <div class="contact-item">
+
+          <span>Email</span>
+
+          <strong>contact@noirestates.com</strong>
+
+        </div>
+
+        <div class="contact-item">
+
+          <span>Location</span>
+
+          <strong>
+
+            Beirut, Lebanon
+
+            <br>
+
+            Downtown District
+
+          </strong>
+
+        </div>
+
+        <a
+          href="https://wa.me/9613123123"
+          target="_blank"
+          class="contact-whatsapp"
+        >
+
+          <i class="fa-brands fa-whatsapp"></i>
+
+          Contact on WhatsApp
+
+        </a>
+
+      </div>
+
+      <!-- MAP -->
+      <div class="map-container">
+
+        <iframe
+          src="https://maps.google.com/maps?q=Beirut%20Lebanon&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+
+    <div class="footer-center">
+
+      <h3>Noir Estates</h3>
+
+      <p>Luxury Real Estate Agency</p>
+
+    </div>
+
+    <div class="footer-bottom">
+
+      © 2026 Noir Estates. All rights reserved.
+
+    </div>
+
+  </footer>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+
+</body>
+</html>
+
