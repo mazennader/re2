@@ -140,16 +140,10 @@ const properties = [
     const filtered = properties.filter((property) => {
   
       const matchesSearch =
-  
-        property.title
-        .toLowerCase()
-        .includes(searchTerm)
-  
-        ||
-  
-        property.location
-        .toLowerCase()
-        .includes(searchTerm);
+  property.title.toLowerCase().includes(searchTerm) ||
+  property.location.toLowerCase().includes(searchTerm) ||
+  property.price.toLowerCase().includes(searchTerm) ||
+  property.type.toLowerCase().includes(searchTerm);
   
       const matchesFilter =
   
