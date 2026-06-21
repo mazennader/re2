@@ -1057,12 +1057,26 @@
       padding:160px 20px 100px;
     }
   
+    .hero-content{
+      padding:120px 20px 80px;
+    }
+  
     .hero-content h1{
-      font-size:50px;
+      font-size:42px;
+      line-height:1.05;
+      margin-bottom:18px;
     }
   
     .hero-content p{
-      font-size:17px;
+      font-size:15px;
+      line-height:1.6;
+      max-width:95%;
+    }
+  
+    .hero-subtitle{
+      font-size:11px;
+      padding:10px 16px;
+      margin-bottom:20px;
     }
   
     .search-box{
@@ -1117,8 +1131,8 @@
     }
     
     .logo-icon{
-      width:46px;
-      height:46px;
+      width:52px;
+      height:52px;
       border-radius:14px;
     }
     
@@ -1162,13 +1176,14 @@
       }
     
       .logo-icon{
-        width:36px;
-        height:36px;
+        width:42px;
+        height:42px;
         border-radius:10px;
       }
     
       .logo-section h2{
-        font-size:14px;
+        font-size:15px;
+  font-weight:700;
         line-height:1;
         margin-bottom:2px;
       }
