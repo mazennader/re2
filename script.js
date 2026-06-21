@@ -6,13 +6,13 @@
 const properties = [
   {
     id: 1,
-    title: "Property 1",
-    location: "Lebanon",
+    title: "luxury sea view villa",
+    location: "ghedras",
     price: "$560000",
     type: "sale",
     beds: 3,
     baths: 2,
-    area: "Contact for details",
+    area: "640 sqm",
     parking: 3,
     featured: "Yes",
     images: [
@@ -32,7 +32,7 @@ const properties = [
 
   {
     id: 2,
-    title: "Property 2",
+    title: "Batroun villa",
     location: "Lebanon",
     price: "$375000",
     type: "sale",
@@ -428,6 +428,17 @@ const properties = [
   
     detailDescription.innerText =
       property.description;
+      document.getElementById("detailBeds").innerText = property.beds;
+      document.getElementById("detailBaths").innerText = property.baths;
+      document.getElementById("detailAreaNumber").innerText = property.area;
+      document.getElementById("detailParking").innerText = property.parking;
+      
+      document.getElementById("sideType").innerText = property.type;
+      document.getElementById("sideBeds").innerText = property.beds;
+      document.getElementById("sideBaths").innerText = property.baths;
+      document.getElementById("sideArea").innerText = property.area;
+      document.getElementById("sideParking").innerText = property.parking;
+      document.getElementById("sideFeatured").innerText = property.featured;
   
     detailsBadge.innerText =
       getBadgeText(property.type);
