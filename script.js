@@ -13,7 +13,7 @@ const properties = [
     beds: 3,
     baths: 2,
     area: "Contact for details",
-    parking: 1,
+    parking: 3,
     featured: "Yes",
     images: [
       "images/pro1-1.jpeg",
@@ -36,10 +36,10 @@ const properties = [
     location: "Lebanon",
     price: "$375000",
     type: "sale",
-    beds: 3,
-    baths: 2,
+    beds: 4,
+    baths: 4,
     area: "Contact for details",
-    parking: 1,
+    parking: 2,
     featured: "Yes",
     images: [
       "images/pro2-1.jpeg",
