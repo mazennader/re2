@@ -1053,13 +1053,6 @@
       font-size:14px;
     }
   
-    .hero-content{
-      padding:160px 20px 100px;
-    }
-  
-    .hero-content{
-      padding:120px 20px 80px;
-    }
   
     .hero-content h1{
       font-size:42px;
@@ -1119,94 +1112,138 @@
     }
   
   }
-  /* CLEANER LUXURY HEADER FIX */
-  
-  .header{
-      top:18px;
-      height:72px;
-      width:calc(100% - 48px);
-      max-width:1180px;
-      padding:0 24px;
-      border-radius:22px;
-    }
-    
-    .logo-icon{
-      width:52px;
-      height:52px;
-      border-radius:14px;
-    }
-    
-    .logo-section h2{
-      font-size:16px;
-    }
-    
-    .logo-section p{
-      font-size:12px;
-    }
-    
-    .nav-link{
-      height:44px;
-      padding:0 18px;
-      border-radius:14px;
-    }
-    
-    .header-whatsapp{
-      height:46px;
-      padding:0 20px;
-      border-radius:14px;
-    }
-    
-    .hero-content{
-      padding-top:150px;
-    }
-    /* MOBILE HEADER CLEAN FIX */
-  
-  @media(max-width:700px){
-  
-      .header{
-        height:64px;
-        padding:0 14px;
-        border-radius:18px;
-        top:10px;
-        width:calc(100% - 16px);
-      }
-    
-      .logo-section{
-        gap:10px;
-      }
-    
-      .logo-icon{
-        width:42px;
-        height:42px;
-        border-radius:10px;
-      }
-    
-      .logo-section h2{
-        font-size:15px;
+  /* CLEANER LUXURY HEADER + HERO FIX */
+
+.header{
+  top:18px;
+  height:76px;
+  width:calc(100% - 48px);
+  max-width:1180px;
+  padding:0 24px;
+  border-radius:22px;
+}
+
+.logo-icon{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+}
+
+.logo-section h2{
+  font-size:16px;
   font-weight:700;
-        line-height:1;
-        margin-bottom:2px;
-      }
-    
-      .logo-section p{
-        font-size:10px;
-        line-height:1.1;
-      }
-    
-      .header-whatsapp{
-        height:38px;
-        padding:0 14px;
-        font-size:13px;
-        border-radius:12px;
-        gap:6px;
-      }
-    
-      .header-whatsapp i{
-        font-size:14px;
-      }
-    
-      .hero-content{
-        padding-top:135px;
-      }
-    
-    }
+}
+
+.logo-section p{
+  font-size:12px;
+}
+
+.nav-link{
+  height:44px;
+  padding:0 18px;
+  border-radius:14px;
+}
+
+.header-whatsapp{
+  height:46px;
+  padding:0 20px;
+  border-radius:14px;
+}
+
+.hero-content{
+  padding-top:150px;
+}
+
+@media(max-width:700px){
+
+  .header{
+    height:62px;
+    padding:0 12px;
+    border-radius:18px;
+    top:10px;
+    width:calc(100% - 16px);
+  }
+
+  .logo-section{
+    gap:9px;
+  }
+
+  .logo-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+  }
+
+  .logo-section h2{
+    font-size:14px;
+    line-height:1;
+    margin-bottom:0;
+    white-space:nowrap;
+  }
+
+  .logo-section p{
+    display:none;
+  }
+
+  .header-whatsapp{
+    height:38px;
+    padding:0 13px;
+    font-size:13px;
+    border-radius:12px;
+    gap:6px;
+    white-space:nowrap;
+  }
+
+  .header-whatsapp i{
+    font-size:14px;
+  }
+
+  .hero-content{
+    padding:125px 18px 75px;
+  }
+
+  .hero-subtitle{
+    font-size:10px;
+    letter-spacing:1.6px;
+    padding:10px 16px;
+    margin-bottom:22px;
+  }
+
+  .hero-content h1{
+    font-size:40px;
+    line-height:1.08;
+    margin-bottom:18px;
+  }
+
+  .hero-content p{
+    font-size:15px;
+    line-height:1.55;
+    max-width:95%;
+    margin-bottom:30px;
+  }
+
+  .search-box{
+    border-radius:22px;
+    margin-bottom:30px;
+  }
+
+  .search-input{
+    padding:0 18px;
+  }
+
+  .search-input input{
+    height:72px;
+    font-size:15px;
+  }
+
+  .search-box button{
+    height:60px;
+    font-size:16px;
+  }
+
+  .filter-btn{
+    height:50px;
+    padding:0 22px;
+    font-size:14px;
+  }
+}
