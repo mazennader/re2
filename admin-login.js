@@ -15,7 +15,7 @@ async function checkSession() {
     const { data } = await supabaseClient.auth.getSession();
 
     if (data.session) {
-        window.location.href = "admin.html";
+        window.location.href = "jcr-dashboard-2026.html";
     }
 }
 
@@ -62,7 +62,7 @@ loginForm.addEventListener("submit", async (e) => {
     loginMessage.textContent = "Login successful! Redirecting...";
 
     setTimeout(() => {
-        window.location.href = "admin.html";
+        window.location.href = "jcr-dashboard-2026.html";
     }, 700);
 
 });

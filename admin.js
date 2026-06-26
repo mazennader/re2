@@ -10,7 +10,7 @@ async function protectAdminPage() {
   const { data, error } = await supabaseClient.auth.getSession();
 
   if (error || !data.session) {
-    window.location.href = "admin-login.html";
+    window.location.href = "jcr-login-2026.html";
     return;
   }
 
@@ -719,7 +719,7 @@ function showAlert(message, type = "info") {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", async () => {
       await supabaseClient.auth.signOut();
-      window.location.href = "admin-login.html";
+      window.location.href = "jcr-login-2026.html";
     });
   }
   /* =========================

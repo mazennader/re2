@@ -118,8 +118,10 @@ const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 const resultsText = document.getElementById("resultsText");
 const filterButtons = document.querySelectorAll(".filter-btn");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
 
 let currentFilter = "all";
+let visibleProperties = 6;
 
 function renderProperties() {
   if (!propertiesGrid || !searchInput || !resultsText) return;
@@ -145,9 +147,11 @@ function renderProperties() {
 
   resultsText.innerText = `${filtered.length} properties available`;
 
-  propertiesGrid.innerHTML = "";
+propertiesGrid.innerHTML = "";
 
-  filtered.forEach((property, index) => {
+const propertiesToShow = filtered.slice(0, visibleProperties);
+
+propertiesToShow.forEach((property, index) => {
     const images = getImages(property);
     const badgeText = getBadgeText(property.type);
     const badgeClass = getBadgeClass(property.type);
@@ -232,6 +236,19 @@ function renderProperties() {
       card.style.transform = "translateY(0)";
     }, 90 * index);
   });
+  if (loadMoreBtn) {
+
+    if (visibleProperties < filtered.length) {
+
+        loadMoreBtn.style.display = "block";
+
+    } else {
+
+        loadMoreBtn.style.display = "none";
+
+    }
+
+}
 }
 
 if (filterButtons.length > 0) {
@@ -244,17 +261,46 @@ if (filterButtons.length > 0) {
       button.classList.add("active");
       currentFilter = button.dataset.filter;
 
-      renderProperties();
+visibleProperties = 6;
+
+renderProperties();
     });
   });
 }
 
 if (searchBtn) {
-  searchBtn.addEventListener("click", renderProperties);
+
+  searchBtn.addEventListener("click", () => {
+
+      visibleProperties = 6;
+
+      renderProperties();
+
+  });
+
 }
 
 if (searchInput) {
-  searchInput.addEventListener("keyup", renderProperties);
+
+  searchInput.addEventListener("keyup", () => {
+
+      visibleProperties = 6;
+
+      renderProperties();
+
+  });
+
+}
+if (loadMoreBtn) {
+
+  loadMoreBtn.addEventListener("click", () => {
+
+      visibleProperties += 6;
+
+      renderProperties();
+
+  });
+
 }
 
 /* =========================
