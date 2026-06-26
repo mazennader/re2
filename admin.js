@@ -2,7 +2,25 @@
    JCR ADMIN DASHBOARD
    PART 1
 ========================= */
+/* =========================
+   ADMIN PROTECTION
+========================= */
 
+async function protectAdminPage() {
+  const { data, error } = await supabaseClient.auth.getSession();
+
+  if (error) {
+      console.error(error);
+      window.location.href = "admin-login.html";
+      return;
+  }
+
+  if (!data.session) {
+      window.location.href = "admin-login.html";
+  }
+}
+
+protectAdminPage();
 const BUCKET_NAME = "property-images";
 const FALLBACK_IMAGE = "images/logo.jpeg";
 

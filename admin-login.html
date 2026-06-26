@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JCR Admin Login</title>
+
+    <link rel="stylesheet" href="admin-login.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="background-overlay"></div>
+
+<div class="login-container">
+
+    <div class="login-left">
+
+        <img src="images/logo.jpeg" class="logo">
+
+        <h1>JCR Real Estate</h1>
+
+        <p>
+
+            Welcome back.
+
+            Sign in to manage your properties, upload new listings,
+            edit existing properties and keep your website updated.
+
+        </p>
+
+        <ul>
+
+            <li><i class="fa-solid fa-check"></i> Secure Dashboard</li>
+
+            <li><i class="fa-solid fa-check"></i> Property Management</li>
+
+            <li><i class="fa-solid fa-check"></i> Image Uploads</li>
+
+            <li><i class="fa-solid fa-check"></i> Live Website Updates</li>
+
+        </ul>
+
+    </div>
+
+    <div class="login-card">
+
+        <span class="small-title">
+            ADMIN LOGIN
+        </span>
+
+        <h2>Sign In</h2>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+
+                <label>Email</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Password</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                >
+
+            </div>
+
+            <button type="submit" id="loginBtn">
+
+                <i class="fa-solid fa-lock"></i>
+
+                Login
+
+            </button>
+
+        </form>
+
+        <p id="loginMessage"></p>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script src="admin-login.js"></script>
+
+</body>
+</html>
