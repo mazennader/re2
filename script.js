@@ -1,592 +1,421 @@
-
 /* =========================
-   LUXURY PROPERTIES
+   SUPABASE PROPERTIES
 ========================= */
 
-const properties = [
-  {
-    id: 1,
-    title: "luxury sea view villa",
-    location: "ghedras",
-    price: "$560000",
-    type: "sale",
-    beds: 3,
-    baths: 2,
-    area: "640 sqm",
-    parking: 3,
-    featured: "Yes",
-    images: [
-      "images/pro1-1.jpeg",
-      "images/pro1-2.jpeg",
-      "images/pro1-3.jpeg",
-      "images/pro1-4.jpeg",
-      "images/pro1-5.jpeg",
-      "images/pro1-6.jpeg",
-      "images/pro1-7.jpeg",
-      "images/pro1-8.jpeg",
-      "images/pro1-9.jpeg"
-    ],
-    description:
-      "A featured property with a clean modern presentation, multiple interior and exterior images, and all key details available upon request."
-  },
+let properties = [];
 
-  {
-    id: 2,
-    title: "Batroun villa",
-    location: "Lebanon",
-    price: "$375000",
-    type: "sale",
-    beds: 4,
-    baths: 4,
-    area: "Contact for details",
-    parking: 2,
-    featured: "Yes",
-    images: [
-      "images/pro2-1.jpeg",
-      "images/pro2-2.jpeg",
-      "images/pro2-3.jpeg",
-      "images/pro2-4.jpeg",
-      "images/pro2-5.jpeg"
-    ],
-    description:
-      "A second featured property displayed with professional gallery images, suitable for buyers looking for a clean and elegant real estate listing."
+const WHATSAPP_NUMBER = "9613123123";
+const FALLBACK_IMAGE = "images/logo.jpeg";
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+
+  if (loader) {
+    setTimeout(() => {
+      loader.classList.add("hide");
+    }, 700);
   }
-];
-  
-  /* =========================
-     LOADER
-  ========================= */
-  
-  window.addEventListener("load", () => {
-  
-    const loader = document.getElementById("loader");
-  
-    if(loader){
-  
-      setTimeout(() => {
-  
-        loader.classList.add("hide");
-  
-      },700);
-  
-    }
-  
+});
+
+/* =========================
+   HELPERS
+========================= */
+
+function formatPrice(price) {
+  if (!price) return "Price on request";
+
+  return `$${Number(price).toLocaleString()}`;
+}
+
+function getBadgeText(type) {
+  if (type === "sale") return "For Sale";
+  if (type === "rent") return "For Rent";
+  if (type === "land") return "Land";
+  if (type === "villa") return "Villa";
+  if (type === "apartment") return "Apartment";
+
+  return "Property";
+}
+
+function getBadgeClass(type) {
+  if (type === "sale") return "badge-sale";
+  if (type === "rent") return "badge-rent";
+  if (type === "land") return "badge-land";
+
+  return "badge-sale";
+}
+
+function getImages(property) {
+  if (property.images && property.images.length > 0) {
+    return property.images;
+  }
+
+  return [FALLBACK_IMAGE];
+}
+
+function getAreaText(property) {
+  const houseArea = property.house_area;
+  const landArea = property.land_area;
+
+  if (houseArea && landArea) {
+    return `House: ${houseArea} | Land: ${landArea}`;
+  }
+
+  if (houseArea) {
+    return `House: ${houseArea}`;
+  }
+
+  if (landArea) {
+    return `Land: ${landArea}`;
+  }
+
+  return "Area on request";
+}
+
+function createWhatsAppLink(property) {
+  const message = `Hello, I am interested in this property: ${property.title}`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
+
+/* =========================
+   LOAD FROM SUPABASE
+========================= */
+
+async function loadProperties() {
+  const { data, error } = await supabaseClient
+    .from("properties")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Supabase error:", error);
+    return;
+  }
+
+  properties = data || [];
+
+  if (document.getElementById("propertiesGrid")) {
+    renderProperties();
+  }
+
+  if (document.querySelector(".details-page")) {
+    renderDetailsPage();
+  }
+
+  startScrollAnimations();
+}
+
+/* =========================
+   HOME PAGE
+========================= */
+
+const propertiesGrid = document.getElementById("propertiesGrid");
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const resultsText = document.getElementById("resultsText");
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+let currentFilter = "all";
+
+function renderProperties() {
+  if (!propertiesGrid || !searchInput || !resultsText) return;
+
+  const searchTerm = searchInput.value.toLowerCase();
+
+  const filtered = properties.filter((property) => {
+    const priceText = formatPrice(property.price).toLowerCase();
+    const areaText = getAreaText(property).toLowerCase();
+
+    const matchesSearch =
+      String(property.title || "").toLowerCase().includes(searchTerm) ||
+      String(property.location || "").toLowerCase().includes(searchTerm) ||
+      String(property.type || "").toLowerCase().includes(searchTerm) ||
+      priceText.includes(searchTerm) ||
+      areaText.includes(searchTerm);
+
+    const matchesFilter =
+      currentFilter === "all" || property.type === currentFilter;
+
+    return matchesSearch && matchesFilter;
   });
-  
-  /* =========================
-     HELPERS
-  ========================= */
-  
-  function getBadgeText(type){
-  
-    if(type === "sale") return "For Sale";
-  
-    if(type === "rent") return "For Rent";
-  
-    if(type === "land") return "Land";
-  
-    return "Property";
-  
-  }
-  
-  function getBadgeClass(type){
-  
-    if(type === "sale") return "badge-sale";
-  
-    if(type === "rent") return "badge-rent";
-  
-    if(type === "land") return "badge-land";
-  
-  }
-  
-  function isLand(property){
-  
-    return property.type === "land";
-  
-  }
-  
-  /* =========================
-     HOME PAGE
-  ========================= */
-  
-  const propertiesGrid =
-    document.getElementById("propertiesGrid");
-  
-  const searchInput =
-    document.getElementById("searchInput");
-  
-  const searchBtn =
-    document.getElementById("searchBtn");
-  
-  const resultsText =
-    document.getElementById("resultsText");
-  
-  const filterButtons =
-    document.querySelectorAll(".filter-btn");
-  
-  let currentFilter = "all";
-  
-  function renderProperties(){
-  
-    if(
-      !propertiesGrid ||
-      !searchInput ||
-      !resultsText
-    ) return;
-  
-    const searchTerm =
-      searchInput.value.toLowerCase();
-  
-    const filtered = properties.filter((property) => {
-  
-      const matchesSearch =
-  property.title.toLowerCase().includes(searchTerm) ||
-  property.location.toLowerCase().includes(searchTerm) ||
-  property.price.toLowerCase().includes(searchTerm) ||
-  property.type.toLowerCase().includes(searchTerm);
-  
-      const matchesFilter =
-  
-        currentFilter === "all"
-  
-        ||
-  
-        property.type === currentFilter;
-  
-      return matchesSearch && matchesFilter;
-  
-    });
-  
-    resultsText.innerText =
-      `${filtered.length} luxury properties available`;
-  
-    propertiesGrid.innerHTML = "";
-  
-    filtered.forEach((property,index) => {
-  
-      const badgeText =
-        getBadgeText(property.type);
-  
-      const badgeClass =
-        getBadgeClass(property.type);
-  
-      const featureHtml = isLand(property)
-  
-        ?
-  
-        `
-          <span>
-            <i class="fa-solid fa-expand"></i>
-            ${property.area}
-          </span>
-  
-          <span>
-            <i class="fa-solid fa-map"></i>
-            ${property.zoning}
-          </span>
-  
-          <span>
-            <i class="fa-solid fa-road"></i>
-            Road Access
-          </span>
-        `
-  
-        :
-  
-        `
-          <span>
-            <i class="fa-solid fa-bed"></i>
-            ${property.beds}
-          </span>
-  
-          <span>
-            <i class="fa-solid fa-bath"></i>
-            ${property.baths}
-          </span>
-  
-          <span>
-            <i class="fa-solid fa-expand"></i>
-            ${property.area}
-          </span>
-        `;
-  
-      const card =
-        document.createElement("div");
-  
-      card.className = "property-card";
-  
-      card.innerHTML = `
-  
-        <div class="property-image">
-  
-          <img
-            src="${property.images[0]}"
-            alt="${property.title}"
+
+  resultsText.innerText = `${filtered.length} properties available`;
+
+  propertiesGrid.innerHTML = "";
+
+  filtered.forEach((property, index) => {
+    const images = getImages(property);
+    const badgeText = getBadgeText(property.type);
+    const badgeClass = getBadgeClass(property.type);
+
+    const featureHtml = `
+      <span>
+        <i class="fa-solid fa-bed"></i>
+        ${property.beds || 0}
+      </span>
+
+      <span>
+        <i class="fa-solid fa-bath"></i>
+        ${property.baths || 0}
+      </span>
+
+      <span>
+        <i class="fa-solid fa-expand"></i>
+        ${getAreaText(property)}
+      </span>
+    `;
+
+    const card = document.createElement("div");
+    card.className = "property-card";
+
+    card.innerHTML = `
+      <div class="property-image">
+        <img src="${images[0]}" alt="${property.title || "Property"}">
+
+        <div class="property-badge ${badgeClass}">
+          ${badgeText}
+        </div>
+      </div>
+
+      <div class="property-content">
+        <h3 class="property-title">
+          ${property.title || "Untitled Property"}
+        </h3>
+
+        <div class="property-location">
+          <i class="fa-solid fa-location-dot"></i>
+          ${property.location || "Location on request"}
+        </div>
+
+        <div class="property-price">
+          ${formatPrice(property.price)}
+        </div>
+
+        <div class="property-features">
+          ${featureHtml}
+        </div>
+
+        <div class="card-buttons">
+          <button class="details-btn">
+            View Details
+          </button>
+
+          <a
+            href="${createWhatsAppLink(property)}"
+            target="_blank"
+            class="whatsapp-btn"
           >
-  
-          <div class="property-badge ${badgeClass}">
-  
-            ${badgeText}
-  
-          </div>
-  
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
         </div>
-  
-        <div class="property-content">
-  
-          <h3 class="property-title">
-  
-            ${property.title}
-  
-          </h3>
-  
-          <div class="property-location">
-  
-            <i class="fa-solid fa-location-dot"></i>
-  
-            ${property.location}
-  
-          </div>
-  
-          <div class="property-price">
-  
-            ${property.price}
-  
-          </div>
-  
-          <div class="property-features">
-  
-            ${featureHtml}
-  
-          </div>
-  
-          <div class="card-buttons">
-  
-            <button class="details-btn">
-  
-              View Details
-  
-            </button>
-  
-            <a
-              href="https://wa.me/9613123123"
-              target="_blank"
-              class="whatsapp-btn"
-            >
-  
-              <i class="fa-brands fa-whatsapp"></i>
-  
-            </a>
-  
-          </div>
-  
-        </div>
-  
-      `;
-  
-      card.addEventListener("click",() => {
-  
-        window.location.href =
-          `property-details.html?id=${property.id}`;
-  
-      });
-  
-      const whatsappBtn =
-        card.querySelector(".whatsapp-btn");
-  
-      whatsappBtn.addEventListener("click",(e) => {
-  
-        e.stopPropagation();
-  
-      });
-  
-      propertiesGrid.appendChild(card);
-  
-      setTimeout(() => {
-  
-        card.style.opacity = "1";
-  
-        card.style.transform =
-          "translateY(0)";
-  
-      },90 * index);
-  
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      window.location.href = `property-details.html?id=${property.id}`;
     });
-  
-  }
-  
-  if(filterButtons.length > 0){
-  
-    filterButtons.forEach((button) => {
-  
-      button.addEventListener("click",() => {
-  
-        filterButtons.forEach((btn) => {
-  
-          btn.classList.remove("active");
-  
-        });
-  
-        button.classList.add("active");
-  
-        currentFilter =
-          button.dataset.filter;
-  
-        renderProperties();
-  
-      });
-  
+
+    const whatsappBtn = card.querySelector(".whatsapp-btn");
+
+    whatsappBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
     });
-  
-  }
-  
-  if(searchBtn){
-  
-    searchBtn.addEventListener(
-      "click",
-      renderProperties
-    );
-  
-  }
-  
-  if(searchInput){
-  
-    searchInput.addEventListener(
-      "keyup",
-      renderProperties
-    );
-  
-  }
-  
-  renderProperties();
-  
-  /* =========================
-     DETAILS PAGE
-  ========================= */
-  
-  const detailsPage =
-    document.querySelector(".details-page");
-  
-  if(detailsPage){
-  
-    const params =
-      new URLSearchParams(window.location.search);
-  
-    const propertyId =
-      Number(params.get("id")) || 1;
-  
-    const property =
-  
-      properties.find(
-        (item) => item.id === propertyId
-      )
-  
-      ||
-  
-      properties[0];
-  
-    let currentImageIndex = 0;
-  
-    const detailTitle =
-      document.getElementById("detailTitle");
-  
-    const detailLocation =
-      document.getElementById("detailLocation");
-  
-    const detailPrice =
-      document.getElementById("detailPrice");
-  
-    const detailDescription =
-      document.getElementById("detailDescription");
-  
-    const mainPropertyImage =
-      document.getElementById("mainPropertyImage");
-  
-    const thumbnailRow =
-      document.getElementById("thumbnailRow");
-  
-    const galleryDots =
-      document.getElementById("galleryDots");
-  
-    const detailsBadge =
-      document.getElementById("detailsBadge");
-  
-    const prevImage =
-      document.getElementById("prevImage");
-  
-    const nextImage =
-      document.getElementById("nextImage");
-  
-    detailTitle.innerText =
-      property.title;
-  
-    detailLocation.innerText =
-      property.location;
-  
-    detailPrice.innerText =
-      property.price;
-  
-    detailDescription.innerText =
-      property.description;
-      document.getElementById("detailBeds").innerText = property.beds;
-      document.getElementById("detailBaths").innerText = property.baths;
-      document.getElementById("detailAreaNumber").innerText = property.area;
-      document.getElementById("detailParking").innerText = property.parking;
-      
-      document.getElementById("sideType").innerText = property.type;
-      document.getElementById("sideBeds").innerText = property.beds;
-      document.getElementById("sideBaths").innerText = property.baths;
-      document.getElementById("sideArea").innerText = property.area;
-      document.getElementById("sideParking").innerText = property.parking;
-      document.getElementById("sideFeatured").innerText = property.featured;
-  
-    detailsBadge.innerText =
-      getBadgeText(property.type);
-  
-    detailsBadge.classList.add(
-      getBadgeClass(property.type)
-    );
-  
-    function updateGallery(){
-  
-      mainPropertyImage.src =
-        property.images[currentImageIndex];
-  
-      document
-        .querySelectorAll(".thumbnail-img")
-        .forEach((thumb,index) => {
-  
-          thumb.classList.toggle(
-            "active",
-            index === currentImageIndex
-          );
-  
-        });
-  
-    }
-  
-    property.images.forEach((image,index) => {
-  
-      const thumb =
-        document.createElement("img");
-  
-      thumb.src = image;
-  
-      thumb.className =
-        "thumbnail-img";
-  
-      thumb.addEventListener("click",() => {
-  
-        currentImageIndex = index;
-  
-        updateGallery();
-  
+
+    propertiesGrid.appendChild(card);
+
+    setTimeout(() => {
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
+    }, 90 * index);
+  });
+}
+
+if (filterButtons.length > 0) {
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      filterButtons.forEach((btn) => {
+        btn.classList.remove("active");
       });
-  
-      thumbnailRow.appendChild(thumb);
-  
-      const dot =
-        document.createElement("button");
-  
-      dot.className =
-        "gallery-dot";
-  
-      dot.addEventListener("click",() => {
-  
-        currentImageIndex = index;
-  
-        updateGallery();
-  
-      });
-  
-      galleryDots.appendChild(dot);
-  
+
+      button.classList.add("active");
+      currentFilter = button.dataset.filter;
+
+      renderProperties();
     });
-  
-    prevImage.addEventListener("click",() => {
-  
-      currentImageIndex =
-  
-        (
-          currentImageIndex - 1 +
-          property.images.length
-        )
-  
-        %
-  
-        property.images.length;
-  
+  });
+}
+
+if (searchBtn) {
+  searchBtn.addEventListener("click", renderProperties);
+}
+
+if (searchInput) {
+  searchInput.addEventListener("keyup", renderProperties);
+}
+
+/* =========================
+   DETAILS PAGE
+========================= */
+
+function renderDetailsPage() {
+  const detailsPage = document.querySelector(".details-page");
+
+  if (!detailsPage) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const propertyId = params.get("id");
+
+  const property =
+    properties.find((item) => String(item.id) === String(propertyId)) ||
+    properties[0];
+
+  if (!property) {
+    document.querySelector(".details-page").innerHTML =
+      "<h1>Property not found</h1>";
+    return;
+  }
+
+  const images = getImages(property);
+  let currentImageIndex = 0;
+
+  const detailTitle = document.getElementById("detailTitle");
+  const detailLocation = document.getElementById("detailLocation");
+  const detailPrice = document.getElementById("detailPrice");
+  const detailDescription = document.getElementById("detailDescription");
+  const mainPropertyImage = document.getElementById("mainPropertyImage");
+  const thumbnailRow = document.getElementById("thumbnailRow");
+  const galleryDots = document.getElementById("galleryDots");
+  const detailsBadge = document.getElementById("detailsBadge");
+  const prevImage = document.getElementById("prevImage");
+  const nextImage = document.getElementById("nextImage");
+  const breadcrumbTitle = document.getElementById("breadcrumbTitle");
+  const detailsWhatsApp = document.getElementById("detailsWhatsApp");
+
+  detailTitle.innerText = property.title || "Untitled Property";
+  detailLocation.innerText = property.location || "Location on request";
+  detailPrice.innerText = formatPrice(property.price);
+  detailDescription.innerText =
+    property.description || "Description available upon request.";
+
+  breadcrumbTitle.innerText = property.title || "Property Details";
+
+  document.getElementById("detailBeds").innerText = property.beds || 0;
+  document.getElementById("detailBaths").innerText = property.baths || 0;
+  document.getElementById("detailHouseArea").innerText =
+    property.house_area || "-";
+  document.getElementById("detailLandArea").innerText =
+    property.land_area || "-";
+  document.getElementById("detailParking").innerText = property.parking || 0;
+
+  document.getElementById("sideType").innerText = getBadgeText(property.type);
+  document.getElementById("sideBeds").innerText = property.beds || 0;
+  document.getElementById("sideBaths").innerText = property.baths || 0;
+  document.getElementById("sideHouseArea").innerText =
+    property.house_area || "-";
+  document.getElementById("sideLandArea").innerText =
+    property.land_area || "-";
+  document.getElementById("sideParking").innerText =
+    `${property.parking || 0} Spaces`;
+  document.getElementById("sideFeatured").innerText = property.featured
+    ? "Yes"
+    : "No";
+
+  detailsWhatsApp.href = createWhatsAppLink(property);
+
+  detailsBadge.innerText = getBadgeText(property.type);
+  detailsBadge.classList.add(getBadgeClass(property.type));
+
+  thumbnailRow.innerHTML = "";
+  galleryDots.innerHTML = "";
+
+  function updateGallery() {
+    mainPropertyImage.src = images[currentImageIndex];
+
+    document.querySelectorAll(".thumbnail-img").forEach((thumb, index) => {
+      thumb.classList.toggle("active", index === currentImageIndex);
+    });
+
+    document.querySelectorAll(".gallery-dot").forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentImageIndex);
+    });
+  }
+
+  images.forEach((image, index) => {
+    const thumb = document.createElement("img");
+    thumb.src = image;
+    thumb.className = "thumbnail-img";
+
+    thumb.addEventListener("click", () => {
+      currentImageIndex = index;
       updateGallery();
-  
     });
-  
-    nextImage.addEventListener("click",() => {
-  
-      currentImageIndex =
-  
-        (
-          currentImageIndex + 1
-        )
-  
-        %
-  
-        property.images.length;
-  
+
+    thumbnailRow.appendChild(thumb);
+
+    const dot = document.createElement("button");
+    dot.className = "gallery-dot";
+
+    dot.addEventListener("click", () => {
+      currentImageIndex = index;
       updateGallery();
-  
     });
-  
+
+    galleryDots.appendChild(dot);
+  });
+
+  prevImage.addEventListener("click", () => {
+    currentImageIndex =
+      (currentImageIndex - 1 + images.length) % images.length;
+
     updateGallery();
-  
-  }
-  
-  /* =========================
-     SCROLL ANIMATIONS
-  ========================= */
-  
-  const observer =
-    new IntersectionObserver(
-  
-      (entries) => {
-  
-        entries.forEach((entry) => {
-  
-          if(entry.isIntersecting){
-  
-            entry.target.style.opacity = "1";
-  
-            entry.target.style.transform =
-              "translateY(0)";
-  
-          }
-  
-        });
-  
-      },
-  
-      {
-        threshold:0.15
-      }
-  
-    );
-  
+  });
+
+  nextImage.addEventListener("click", () => {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+
+    updateGallery();
+  });
+
+  updateGallery();
+}
+
+/* =========================
+   SCROLL ANIMATIONS
+========================= */
+
+function startScrollAnimations() {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+        }
+      });
+    },
+    {
+      threshold: 0.15,
+    }
+  );
+
   document
     .querySelectorAll(
       ".property-card,.feature-box,.contact-card,.stat-box,.details-card,.sidebar-card"
     )
-  
     .forEach((el) => {
-  
       el.style.opacity = "0";
-  
-      el.style.transform =
-        "translateY(40px)";
-  
-      el.style.transition =
-        "0.8s ease";
-  
+      el.style.transform = "translateY(40px)";
+      el.style.transition = "0.8s ease";
       observer.observe(el);
-  
     });
-  
-  
+}
+
+/* =========================
+   START APP
+========================= */
+
+loadProperties();
