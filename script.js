@@ -320,9 +320,6 @@ function renderDetailsPage() {
     property.land_area || "-";
   document.getElementById("sideParking").innerText =
     `${property.parking || 0} Spaces`;
-  document.getElementById("sideFeatured").innerText = property.featured
-    ? "Yes"
-    : "No";
 
   detailsWhatsApp.href = createWhatsAppLink(property);
 

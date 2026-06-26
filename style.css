@@ -1253,41 +1253,29 @@
   }
 }
 .back-btn{
-
   display:flex;
   align-items:center;
   gap:10px;
 
   width:fit-content;
 
-  margin:30px auto 15px;
+  margin:0 0 22px 0;
 
   padding:0 22px;
-
   height:48px;
 
   border-radius:14px;
-
   border:1px solid rgba(255,255,255,.08);
-
   background:#151515;
-
   color:#fff;
 
   font-weight:600;
-
   cursor:pointer;
-
   transition:.3s;
-
 }
 
 .back-btn:hover{
-
   color:var(--gold);
-
   border-color:rgba(212,175,55,.4);
-
   transform:translateY(-2px);
-
 }
