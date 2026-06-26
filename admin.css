@@ -773,3 +773,6 @@
       width:100%;
     }
   }
+  body.admin-checking .admin-shell{
+    display:none;
+  }

@@ -9,18 +9,14 @@
 async function protectAdminPage() {
   const { data, error } = await supabaseClient.auth.getSession();
 
-  if (error) {
-      console.error(error);
-      window.location.href = "admin-login.html";
-      return;
+  if (error || !data.session) {
+    window.location.href = "admin-login.html";
+    return;
   }
 
-  if (!data.session) {
-      window.location.href = "admin-login.html";
-  }
+  document.body.classList.remove("admin-checking");
 }
 
-protectAdminPage();
 const BUCKET_NAME = "property-images";
 const FALLBACK_IMAGE = "images/logo.jpeg";
 
@@ -72,6 +68,7 @@ const adminAlertText = document.getElementById("adminAlertText");
 const deleteModal = document.getElementById("deleteModal");
 const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
 const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
 /* =========================
    LOAD PROPERTIES
@@ -719,9 +716,17 @@ function showAlert(message, type = "info") {
       renderImagePreviews();
     });
   }
-  
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      await supabaseClient.auth.signOut();
+      window.location.href = "admin-login.html";
+    });
+  }
   /* =========================
      START ADMIN
   ========================= */
   
-  loadAdminProperties();
+  window.addEventListener("DOMContentLoaded", async () => {
+    await protectAdminPage();
+    loadAdminProperties();
+  });
