@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>JCR Admin | Property Management</title>
+
+  <link rel="stylesheet" href="admin.css" />
+
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- FONT AWESOME -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+</head>
+
+<body>
+
+  <div class="admin-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+
+      <a href="index.html" class="admin-brand">
+        <div class="brand-logo">
+          <img src="images/logo.jpeg" alt="JCR Real Estate Logo">
+        </div>
+
+        <div>
+          <h2>JCR</h2>
+          <span>Real Estate CMS</span>
+        </div>
+      </a>
+
+      <nav class="admin-menu">
+
+        <a href="#overview" class="admin-menu-link active">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Overview</span>
+        </a>
+
+        <a href="#property-form-section" class="admin-menu-link">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Property</span>
+        </a>
+
+        <a href="#property-list-section" class="admin-menu-link">
+          <i class="fa-solid fa-building"></i>
+          <span>Listings</span>
+        </a>
+
+        <a href="index.html" target="_blank" class="admin-menu-link">
+          <i class="fa-solid fa-globe"></i>
+          <span>View Website</span>
+        </a>
+
+      </nav>
+
+      <div class="sidebar-note">
+        <i class="fa-solid fa-shield-halved"></i>
+
+        <div>
+          <strong>Admin Panel</strong>
+          <p>Manage JCR listings from one premium dashboard.</p>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+      <!-- TOP BAR -->
+      <header class="admin-topbar">
+
+        <div>
+          <span class="eyebrow">JCR Real Estate</span>
+          <h1>Property Management</h1>
+        </div>
+
+        <div class="topbar-actions">
+
+          <a href="index.html" target="_blank" class="outline-btn">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            Open Site
+          </a>
+
+          <button class="gold-btn" id="refreshBtn">
+            <i class="fa-solid fa-rotate"></i>
+            Refresh
+          </button>
+
+        </div>
+
+      </header>
+
+      <!-- OVERVIEW -->
+      <section class="overview-grid" id="overview">
+
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fa-solid fa-building"></i>
+          </div>
+
+          <div>
+            <span>Total Listings</span>
+            <strong id="totalProperties">0</strong>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fa-solid fa-house-chimney"></i>
+          </div>
+
+          <div>
+            <span>Villas / Houses</span>
+            <strong id="houseProperties">0</strong>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fa-solid fa-tree"></i>
+          </div>
+
+          <div>
+            <span>Land Listings</span>
+            <strong id="landProperties">0</strong>
+          </div>
+        </div>
+
+        <div class="overview-card">
+          <div class="overview-icon">
+            <i class="fa-solid fa-city"></i>
+          </div>
+
+          <div>
+            <span>Apartments / Rentals</span>
+            <strong id="apartmentRentProperties">0</strong>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- STATUS / TOAST -->
+      <div class="admin-alert" id="adminAlert">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="adminAlertText">Ready.</span>
+      </div>
+
+      <!-- PROPERTY FORM -->
+      <section class="admin-card" id="property-form-section">
+
+        <div class="card-head">
+
+          <div>
+            <span class="eyebrow">Create or edit listing</span>
+            <h2 id="formTitle">Add New Property</h2>
+          </div>
+
+          <div class="card-actions">
+            <button class="outline-btn small" id="clearFormBtn" type="button">
+              <i class="fa-solid fa-broom"></i>
+              Clear
+            </button>
+
+            <button class="outline-btn small danger-soft" id="cancelEditBtn" type="button">
+              <i class="fa-solid fa-xmark"></i>
+              Cancel Edit
+            </button>
+          </div>
+
+        </div>
+
+        <form id="propertyForm">
+
+          <input type="hidden" id="propertyId">
+
+          <div class="form-grid">
+
+            <div class="form-group full">
+              <label for="title">Property Title</label>
+              <input
+                type="text"
+                id="title"
+                placeholder="Example: Luxury Sea View Villa"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="location">Location</label>
+              <input
+                type="text"
+                id="location"
+                placeholder="Example: Ghedras, Lebanon"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="price">Price in USD</label>
+              <input
+                type="number"
+                id="price"
+                placeholder="Example: 560000"
+                min="0"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="type">Property Type</label>
+              <select id="type" required>
+                <option value="sale">Villa / For Sale</option>
+                <option value="rent">Rental</option>
+                <option value="land">Land</option>
+                <option value="apartment">Apartment</option>
+                <option value="chalet">Chalet</option>
+                <option value="commercial">Commercial</option>
+                <option value="office">Office</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="beds">Bedrooms</label>
+              <input
+                type="number"
+                id="beds"
+                placeholder="Example: 3"
+                min="0"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="baths">Bathrooms</label>
+              <input
+                type="number"
+                id="baths"
+                placeholder="Example: 2"
+                min="0"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="parking">Parking Spaces</label>
+              <input
+                type="number"
+                id="parking"
+                placeholder="Example: 2"
+                min="0"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="houseArea">House Area</label>
+              <input
+                type="text"
+                id="houseArea"
+                placeholder="Example: 320 m²"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="landArea">Land Area</label>
+              <input
+                type="text"
+                id="landArea"
+                placeholder="Example: 800 m²"
+              >
+            </div>
+
+            <div class="form-group full">
+              <label for="description">Property Description</label>
+              <textarea
+                id="description"
+                rows="7"
+                placeholder="Write a clean professional property description..."
+              ></textarea>
+            </div>
+
+            <div class="form-group full">
+
+              <label for="propertyImages">Property Gallery</label>
+
+              <div class="upload-zone" id="uploadZone">
+
+                <input
+                  type="file"
+                  id="propertyImages"
+                  multiple
+                  accept="image/*"
+                >
+
+                <div class="upload-content">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  <strong>Upload property images</strong>
+                  <span>Drag and drop images here or click to browse</span>
+                  <small>Multiple images supported</small>
+                </div>
+
+              </div>
+
+              <div class="upload-meta">
+                <span>
+                  <i class="fa-solid fa-circle-check"></i>
+                  Existing images stay when editing unless new images are uploaded.
+                </span>
+
+                <span>
+                  <i class="fa-solid fa-image"></i>
+                  First image becomes the main card image.
+                </span>
+              </div>
+
+              <div class="image-preview-grid" id="imagePreviewGrid">
+                <!-- JS IMAGE PREVIEWS -->
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-footer">
+
+            <div class="save-note">
+              <i class="fa-solid fa-circle-info"></i>
+              Changes update the live website after saving.
+            </div>
+
+            <button type="submit" class="gold-btn large" id="savePropertyBtn">
+              <i class="fa-solid fa-floppy-disk"></i>
+              Save Property
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+      <!-- LISTINGS -->
+      <section class="admin-card" id="property-list-section">
+
+        <div class="card-head">
+
+          <div>
+            <span class="eyebrow">Live Database</span>
+            <h2>All Properties</h2>
+          </div>
+
+          <div class="list-tools">
+
+            <div class="admin-search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+
+              <input
+                type="text"
+                id="adminSearchInput"
+                placeholder="Search by title, location, price, or type..."
+              >
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="properties-list" id="propertiesList">
+          <!-- JS INSERTS PROPERTY MANAGEMENT CARDS -->
+        </div>
+
+        <div class="empty-state" id="emptyState">
+
+          <div class="empty-icon">
+            <i class="fa-solid fa-building-circle-exclamation"></i>
+          </div>
+
+          <h3>No properties yet</h3>
+
+          <p>
+            Add the first JCR property using the form above. Once saved,
+            it will appear on the public website automatically.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div class="modal-overlay" id="deleteModal">
+
+    <div class="confirm-modal">
+
+      <div class="modal-icon danger">
+        <i class="fa-solid fa-trash"></i>
+      </div>
+
+      <h3>Delete this property?</h3>
+
+      <p>
+        This action will remove the property from the website and the database.
+        This cannot be undone.
+      </p>
+
+      <div class="modal-actions">
+
+        <button class="outline-btn" id="cancelDeleteBtn" type="button">
+          Cancel
+        </button>
+
+        <button class="danger-btn" id="confirmDeleteBtn" type="button">
+          <i class="fa-solid fa-trash"></i>
+          Delete Property
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SUPABASE -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <!-- ADMIN JS -->
+  <script src="admin.js"></script>
+
+</body>
+</html>
