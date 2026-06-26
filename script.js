@@ -413,7 +413,13 @@ function startScrollAnimations() {
       observer.observe(el);
     });
 }
-
+function goBackToProperties() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = "index.html#propertiesGrid";
+  }
+}
 /* =========================
    START APP
 ========================= */
