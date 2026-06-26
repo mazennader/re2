@@ -4,7 +4,7 @@
 
 let properties = [];
 
-const WHATSAPP_NUMBER = "9613123123";
+const WHATSAPP_NUMBER = "96181193623";
 const FALLBACK_IMAGE = "images/logo.jpeg";
 
 /* =========================
