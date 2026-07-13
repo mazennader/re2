@@ -1344,3 +1344,31 @@
   }
 
 }
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.header-call{
+  height:50px;
+  padding:0 22px;
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  background:#1b1b1b;
+  border:1px solid rgba(255,255,255,.08);
+
+  color:#fff;
+  font-weight:700;
+
+  transition:.3s;
+}
+
+.header-call:hover{
+  background:#fff;
+  color:#111;
+  transform:translateY(-2px);
+}
