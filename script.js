@@ -119,31 +119,134 @@ const searchBtn = document.getElementById("searchBtn");
 const resultsText = document.getElementById("resultsText");
 const filterButtons = document.querySelectorAll(".filter-btn");
 const loadMoreBtn = document.getElementById("loadMoreBtn");
+const minPriceRange = document.getElementById("minPriceRange");
+const maxPriceRange = document.getElementById("maxPriceRange");
+
+const minPriceLabel = document.getElementById("minPriceLabel");
+const maxPriceLabel = document.getElementById("maxPriceLabel");
+
+const rangeProgress = document.getElementById("rangeProgress");
+
+const priceSort = document.getElementById("priceSort");
+
+const applyPriceFilter = document.getElementById("applyPriceFilter");
+const resetPriceFilter = document.getElementById("resetPriceFilter");
 
 let currentFilter = "all";
 let visibleProperties = 6;
+
+let appliedMinPrice = 0;
+let appliedMaxPrice = 10000000;
+let currentSort = "default";
+
+function getNumericPrice(price) {
+  const numericPrice = Number(price);
+
+  if (!Number.isFinite(numericPrice)) {
+    return null;
+  }
+
+  return numericPrice;
+}
+
+function formatFilterPrice(price) {
+  return `$${Number(price).toLocaleString()}`;
+}
+
+function updatePriceSliderUI() {
+  if (
+    !minPriceRange ||
+    !maxPriceRange ||
+    !minPriceLabel ||
+    !maxPriceLabel ||
+    !rangeProgress
+  ) {
+    return;
+  }
+
+  let minValue = Number(minPriceRange.value);
+  let maxValue = Number(maxPriceRange.value);
+
+  const minimumGap = Number(minPriceRange.step) || 10000;
+
+  if (maxValue - minValue < minimumGap) {
+    if (document.activeElement === minPriceRange) {
+      minValue = maxValue - minimumGap;
+      minPriceRange.value = minValue;
+    } else {
+      maxValue = minValue + minimumGap;
+      maxPriceRange.value = maxValue;
+    }
+  }
+
+  minPriceLabel.innerText = formatFilterPrice(minValue);
+  maxPriceLabel.innerText = formatFilterPrice(maxValue);
+
+  const sliderMinimum = Number(minPriceRange.min);
+  const sliderMaximum = Number(minPriceRange.max);
+  const sliderRange = sliderMaximum - sliderMinimum;
+
+  const minPercent =
+    ((minValue - sliderMinimum) / sliderRange) * 100;
+
+  const maxPercent =
+    ((maxValue - sliderMinimum) / sliderRange) * 100;
+
+  rangeProgress.style.left = `${minPercent}%`;
+  rangeProgress.style.right = `${100 - maxPercent}%`;
+}
 
 function renderProperties() {
   if (!propertiesGrid || !searchInput || !resultsText) return;
 
   const searchTerm = searchInput.value.toLowerCase();
 
-  const filtered = properties.filter((property) => {
+  let filtered = properties.filter((property) => {
     const priceText = formatPrice(property.price).toLowerCase();
     const areaText = getAreaText(property).toLowerCase();
-
+    const numericPrice = getNumericPrice(property.price);
+  
     const matchesSearch =
       String(property.title || "").toLowerCase().includes(searchTerm) ||
       String(property.location || "").toLowerCase().includes(searchTerm) ||
       String(property.type || "").toLowerCase().includes(searchTerm) ||
       priceText.includes(searchTerm) ||
       areaText.includes(searchTerm);
-
-    const matchesFilter =
+  
+    const matchesCategory =
       currentFilter === "all" || property.type === currentFilter;
-
-    return matchesSearch && matchesFilter;
+  
+    const matchesPrice =
+      numericPrice !== null &&
+      numericPrice >= appliedMinPrice &&
+      numericPrice <= appliedMaxPrice;
+  
+    return matchesSearch && matchesCategory && matchesPrice;
   });
+  
+  if (currentSort === "low-high") {
+    filtered.sort((propertyA, propertyB) => {
+      const priceA = getNumericPrice(propertyA.price);
+      const priceB = getNumericPrice(propertyB.price);
+  
+      if (priceA === null) return 1;
+      if (priceB === null) return -1;
+  
+      return priceA - priceB;
+    });
+  }
+  
+  if (currentSort === "high-low") {
+    filtered.sort((propertyA, propertyB) => {
+      const priceA = getNumericPrice(propertyA.price);
+      const priceB = getNumericPrice(propertyB.price);
+  
+      if (priceA === null) return 1;
+      if (priceB === null) return -1;
+  
+      return priceB - priceA;
+    });
+  }
 
   resultsText.innerText = `${filtered.length} properties available`;
 
@@ -301,6 +404,58 @@ if (loadMoreBtn) {
 
   });
 
+}
+if (minPriceRange && maxPriceRange) {
+  minPriceRange.addEventListener("input", updatePriceSliderUI);
+  maxPriceRange.addEventListener("input", updatePriceSliderUI);
+
+  updatePriceSliderUI();
+}
+
+if (applyPriceFilter) {
+  applyPriceFilter.addEventListener("click", () => {
+    appliedMinPrice = Number(minPriceRange.value);
+    appliedMaxPrice = Number(maxPriceRange.value);
+    currentSort = priceSort.value;
+
+    visibleProperties = 6;
+
+    renderProperties();
+
+    const propertiesSection =
+      document.querySelector(".properties-section");
+
+    if (propertiesSection) {
+      propertiesSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  });
+}
+
+if (resetPriceFilter) {
+  resetPriceFilter.addEventListener("click", () => {
+    minPriceRange.value = minPriceRange.min;
+    maxPriceRange.value = maxPriceRange.max;
+    priceSort.value = "default";
+
+    appliedMinPrice = Number(minPriceRange.min);
+    appliedMaxPrice = Number(maxPriceRange.max);
+    currentSort = "default";
+
+    visibleProperties = 6;
+
+    updatePriceSliderUI();
+    renderProperties();
+  });
+}
+if (priceSort) {
+  priceSort.addEventListener("change", () => {
+    currentSort = priceSort.value;
+    visibleProperties = 6;
+    renderProperties();
+  });
 }
 
 /* =========================

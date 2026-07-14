@@ -198,35 +198,157 @@
   </section>
 
   <!-- PROPERTIES -->
-  <section class="properties-section">
+  <!-- PROPERTIES -->
+<section class="properties-section">
 
-    <div class="section-title">
+  <div class="section-title">
 
-      <span class="section-tag">
-        Available Properties
-      </span>
+    <span class="section-tag">
+      Available Properties
+    </span>
 
-      <h2>Featured Properties</h2>
+    <h2>Featured Properties</h2>
 
-      <p id="resultsText">
-        Loading properties...
-      </p>
+    <p id="resultsText">
+      Loading properties...
+    </p>
+
+  </div>
+
+  <!-- PROPERTY FILTERS -->
+  <div class="property-filter-panel">
+
+    <!-- PRICE RANGE -->
+    <div class="price-filter-group">
+
+      <div class="property-filter-heading">
+
+        <i class="fa-solid fa-tag"></i>
+
+        <span>Price Range</span>
+
+      </div>
+
+      <div class="price-range-values">
+
+        <span id="minPriceLabel">
+          $0
+        </span>
+
+        <span id="maxPriceLabel">
+          $10,000,000
+        </span>
+
+      </div>
+
+      <div class="dual-range-slider">
+
+        <div class="range-track"></div>
+
+        <div class="range-progress" id="rangeProgress"></div>
+
+        <input
+          type="range"
+          id="minPriceRange"
+          min="0"
+          max="10000000"
+          step="10000"
+          value="0"
+          aria-label="Minimum property price"
+        >
+
+        <input
+          type="range"
+          id="maxPriceRange"
+          min="0"
+          max="10000000"
+          step="10000"
+          value="10000000"
+          aria-label="Maximum property price"
+        >
+
+      </div>
 
     </div>
 
-    <div
-      class="properties-grid"
-      id="propertiesGrid"
-    >
+    <!-- PRICE SORT -->
+    <div class="price-sort-group">
 
-      <!-- JS INSERTS CARDS -->
+      <label for="priceSort">
+
+        <i class="fa-solid fa-arrow-down-wide-short"></i>
+
+        Sort By
+
+      </label>
+
+      <select id="priceSort">
+
+        <option value="default">
+          Default Order
+        </option>
+
+        <option value="low-high">
+          Price: Low to High
+        </option>
+
+        <option value="high-low">
+          Price: High to Low
+        </option>
+
+      </select>
 
     </div>
-    <button class="load-more-btn" id="loadMoreBtn">
-      Load More Properties
-    </button>
 
-  </section>
+    <!-- FILTER ACTIONS -->
+    <div class="property-filter-actions">
+
+      <button
+        type="button"
+        id="applyPriceFilter"
+        class="apply-filter-btn"
+      >
+
+        <i class="fa-solid fa-filter"></i>
+
+        Apply Filters
+
+      </button>
+
+      <button
+        type="button"
+        id="resetPriceFilter"
+        class="reset-filter-btn"
+      >
+
+        <i class="fa-solid fa-rotate-left"></i>
+
+        Reset
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- PROPERTY CARDS -->
+  <div
+    class="properties-grid"
+    id="propertiesGrid"
+  >
+
+    <!-- JS INSERTS CARDS -->
+
+  </div>
+
+  <button
+    class="load-more-btn"
+    id="loadMoreBtn"
+  >
+    Load More Properties
+  </button>
+
+</section>
 
   <!-- ABOUT -->
   <section class="about-section">
