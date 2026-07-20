@@ -208,11 +208,21 @@
               <input
                 type="text"
                 id="location"
-                placeholder="Example: Ghedras, Lebanon"
+                placeholder="Example: Ghedras or Limassol"
                 required
               >
             </div>
-
+            
+            <div class="form-group">
+              <label for="country">Country</label>
+            
+              <select id="country" required>
+                <option value="">Select country</option>
+                <option value="lebanon">Lebanon</option>
+                <option value="cyprus">Cyprus</option>
+              </select>
+            </div>
+            
             <div class="form-group">
               <label for="price">Price in USD</label>
               <input

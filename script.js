@@ -128,6 +128,7 @@ const maxPriceLabel = document.getElementById("maxPriceLabel");
 const rangeProgress = document.getElementById("rangeProgress");
 
 const priceSort = document.getElementById("priceSort");
+const countryFilter = document.getElementById("countryFilter");
 
 const applyPriceFilter = document.getElementById("applyPriceFilter");
 const resetPriceFilter = document.getElementById("resetPriceFilter");
@@ -138,6 +139,7 @@ let visibleProperties = 6;
 let appliedMinPrice = 0;
 let appliedMaxPrice = 10000000;
 let currentSort = "default";
+let currentCountry = "all";
 
 function getNumericPrice(price) {
   const numericPrice = Number(price);
@@ -210,18 +212,29 @@ function renderProperties() {
       String(property.title || "").toLowerCase().includes(searchTerm) ||
       String(property.location || "").toLowerCase().includes(searchTerm) ||
       String(property.type || "").toLowerCase().includes(searchTerm) ||
-      priceText.includes(searchTerm) ||
+String(property.country || "").toLowerCase().includes(searchTerm) ||
+priceText.includes(searchTerm) ||
       areaText.includes(searchTerm);
   
-    const matchesCategory =
-      currentFilter === "all" || property.type === currentFilter;
-  
+      const matchesCategory =
+      currentFilter === "all" ||
+      property.type === currentFilter;
+    
+    const matchesCountry =
+      currentCountry === "all" ||
+      String(property.country || "lebanon").toLowerCase() === currentCountry;
+    
     const matchesPrice =
       numericPrice !== null &&
       numericPrice >= appliedMinPrice &&
       numericPrice <= appliedMaxPrice;
-  
-    return matchesSearch && matchesCategory && matchesPrice;
+    
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesCountry &&
+      matchesPrice
+    );
   });
   
   if (currentSort === "low-high") {
@@ -294,9 +307,11 @@ propertiesToShow.forEach((property, index) => {
         </h3>
 
         <div class="property-location">
-          <i class="fa-solid fa-location-dot"></i>
-          ${property.location || "Location on request"}
-        </div>
+    <i class="fa-solid fa-location-dot"></i>
+    ${property.location || "Location on request"}
+    •
+    ${property.country === "cyprus" ? "Cyprus" : "Lebanon"}
+</div>
 
         <div class="property-price">
           ${formatPrice(property.price)}
@@ -417,6 +432,7 @@ if (applyPriceFilter) {
     appliedMinPrice = Number(minPriceRange.value);
     appliedMaxPrice = Number(maxPriceRange.value);
     currentSort = priceSort.value;
+    currentCountry = countryFilter.value;
 
     visibleProperties = 6;
 
@@ -439,10 +455,12 @@ if (resetPriceFilter) {
     minPriceRange.value = minPriceRange.min;
     maxPriceRange.value = maxPriceRange.max;
     priceSort.value = "default";
+    countryFilter.value = "all";
 
     appliedMinPrice = Number(minPriceRange.min);
     appliedMaxPrice = Number(maxPriceRange.max);
     currentSort = "default";
+    currentCountry = "all";
 
     visibleProperties = 6;
 
@@ -457,7 +475,13 @@ if (priceSort) {
     renderProperties();
   });
 }
-
+if (countryFilter) {
+  countryFilter.addEventListener("change", () => {
+    currentCountry = countryFilter.value;
+    visibleProperties = 6;
+    renderProperties();
+  });
+}
 /* =========================
    DETAILS PAGE
 ========================= */

@@ -35,6 +35,7 @@ const propertyIdInput = document.getElementById("propertyId");
 
 const titleInput = document.getElementById("title");
 const locationInput = document.getElementById("location");
+const countryInput = document.getElementById("country");
 const priceInput = document.getElementById("price");
 const typeInput = document.getElementById("type");
 const bedsInput = document.getElementById("beds");
@@ -224,6 +225,7 @@ function handleAdminSearch() {
     return (
       String(property.title || "").toLowerCase().includes(term) ||
       String(property.location || "").toLowerCase().includes(term) ||
+      String(property.country || "").toLowerCase().includes(term) ||
       String(property.type || "").toLowerCase().includes(term) ||
       String(property.price || "").toLowerCase().includes(term) ||
       String(property.house_area || "").toLowerCase().includes(term) ||
@@ -373,6 +375,7 @@ function handleImageSelection(event) {
     return {
       title: titleInput.value.trim(),
       location: locationInput.value.trim(),
+      country: countryInput.value,
       price: Number(priceInput.value),
       type: typeInput.value,
   
@@ -521,6 +524,7 @@ function attachPropertyActionEvents() {
   
     titleInput.value = property.title || "";
     locationInput.value = property.location || "";
+    countryInput.value = property.country || "lebanon";
     priceInput.value = property.price || "";
     typeInput.value = property.type || "sale";
   
@@ -615,6 +619,7 @@ function attachPropertyActionEvents() {
   
   function resetForm() {
     propertyForm.reset();
+    countryInput.value = "lebanon";
   
     propertyIdInput.value = "";
     editingPropertyId = null;
