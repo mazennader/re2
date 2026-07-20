@@ -698,8 +698,12 @@ function showAlert(message, type = "info") {
   ========================= */
   
   const uploadZone = document.getElementById("uploadZone");
+
+  if (uploadZone && propertyImagesInput) {
+    uploadZone.addEventListener("click", () => {
+      propertyImagesInput.click();
+    });
   
-  if (uploadZone) {
     uploadZone.addEventListener("dragover", (e) => {
       e.preventDefault();
       uploadZone.classList.add("dragging");
