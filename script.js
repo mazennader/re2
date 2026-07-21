@@ -35,6 +35,7 @@ function getBadgeText(type) {
   if (type === "sale") return "For Sale";
   if (type === "rent") return "For Rent";
   if (type === "land") return "Land";
+  if (type === "commercial") return "Commercial";
   if (type === "villa") return "Villa";
   if (type === "apartment") return "Apartment";
 
@@ -45,6 +46,7 @@ function getBadgeClass(type) {
   if (type === "sale") return "badge-sale";
   if (type === "rent") return "badge-rent";
   if (type === "land") return "badge-land";
+  if (type === "commercial") return "badge-commercial";
 
   return "badge-sale";
 }
