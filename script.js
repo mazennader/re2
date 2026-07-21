@@ -30,7 +30,15 @@ function formatPrice(price) {
 
   return `$${Number(price).toLocaleString()}`;
 }
+function formatCountry(country) {
+  const value = String(country || "").toLowerCase();
 
+  if (value === "lebanon") return "Lebanon";
+  if (value === "cyprus") return "Cyprus";
+  if (value === "dubai") return "Dubai";
+
+  return "Market not specified";
+}
 function getBadgeText(type) {
   if (type === "sale") return "For Sale";
   if (type === "rent") return "For Rent";
@@ -131,6 +139,7 @@ const rangeProgress = document.getElementById("rangeProgress");
 
 const priceSort = document.getElementById("priceSort");
 const countryFilter = document.getElementById("countryFilter");
+const marketButtons = document.querySelectorAll(".market-btn");
 
 const applyPriceFilter = document.getElementById("applyPriceFilter");
 const resetPriceFilter = document.getElementById("resetPriceFilter");
@@ -312,7 +321,7 @@ propertiesToShow.forEach((property, index) => {
     <i class="fa-solid fa-location-dot"></i>
     ${property.location || "Location on request"}
     •
-    ${property.country === "cyprus" ? "Cyprus" : "Lebanon"}
+    ${formatCountry(property.country)}
 </div>
 
         <div class="property-price">
@@ -436,6 +445,13 @@ if (applyPriceFilter) {
     currentSort = priceSort.value;
     currentCountry = countryFilter.value;
 
+    marketButtons.forEach((button) => {
+      button.classList.toggle(
+        "active",
+        button.dataset.country === currentCountry
+      );
+    });
+
     visibleProperties = 6;
 
     renderProperties();
@@ -462,9 +478,16 @@ if (resetPriceFilter) {
     appliedMinPrice = Number(minPriceRange.min);
     appliedMaxPrice = Number(maxPriceRange.max);
     currentSort = "default";
-    currentCountry = "all";
+currentCountry = "all";
 
-    visibleProperties = 6;
+marketButtons.forEach((button) => {
+  button.classList.toggle(
+    "active",
+    button.dataset.country === "all"
+  );
+});
+
+visibleProperties = 6;
 
     updatePriceSliderUI();
     renderProperties();
@@ -480,8 +503,46 @@ if (priceSort) {
 if (countryFilter) {
   countryFilter.addEventListener("change", () => {
     currentCountry = countryFilter.value;
+
+    marketButtons.forEach((button) => {
+      button.classList.toggle(
+        "active",
+        button.dataset.country === currentCountry
+      );
+    });
+
     visibleProperties = 6;
     renderProperties();
+  });
+}
+if (marketButtons.length > 0) {
+  marketButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      currentCountry = button.dataset.country;
+
+      marketButtons.forEach((marketButton) => {
+        marketButton.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      if (countryFilter) {
+        countryFilter.value = currentCountry;
+      }
+
+      visibleProperties = 6;
+      renderProperties();
+
+      const propertiesSection =
+        document.querySelector(".properties-section");
+
+      if (propertiesSection) {
+        propertiesSection.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    });
   });
 }
 /* =========================
