@@ -1864,3 +1864,107 @@ select{
   background:#1a1a1a;
   color:#fff;
 }
+/* ==========================
+   HERO MARKET SELECTOR
+========================== */
+
+.hero-market-selector{
+  margin:28px 0 26px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.market-selector-label{
+  color:rgba(255,255,255,.85);
+  font-size:15px;
+  font-weight:600;
+  margin-bottom:18px;
+  letter-spacing:.5px;
+}
+
+.market-buttons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:22px;
+  flex-wrap:wrap;
+}
+
+.market-btn{
+  background:none;
+  border:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+  transition:.3s ease;
+}
+
+.market-btn:hover{
+  transform:translateY(-4px);
+}
+
+.market-flag{
+  width:68px;
+  height:68px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  border:2px solid rgba(255,255,255,.18);
+  font-size:34px;
+  transition:.3s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.market-name{
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  transition:.3s ease;
+}
+
+.market-btn.active .market-flag{
+  border-color:var(--gold);
+  background:rgba(212,168,95,.18);
+  box-shadow:
+      0 0 0 5px rgba(212,168,95,.12),
+      0 10px 30px rgba(0,0,0,.35);
+}
+
+.market-btn.active .market-name{
+  color:var(--gold);
+}
+
+.market-btn:hover .market-flag{
+  border-color:var(--gold);
+}
+
+.all-markets-icon{
+  color:var(--gold);
+  font-size:28px;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+  .market-buttons{
+      gap:16px;
+  }
+
+  .market-flag{
+      width:56px;
+      height:56px;
+      font-size:28px;
+  }
+
+  .market-name{
+      font-size:13px;
+  }
+
+}
