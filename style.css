@@ -2106,3 +2106,81 @@ select{
   gap:12px;
   margin-top:auto;
 }
+/* =========================
+   FINAL PROPERTY RESPONSIVE FIX
+========================= */
+
+/* Desktop */
+@media (min-width: 1001px) {
+  .properties-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Tablet */
+@media (min-width: 701px) and (max-width: 1000px) {
+  .properties-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .properties-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .property-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .property-image {
+    height: 260px;
+  }
+
+  .property-content {
+    padding: 22px;
+  }
+
+  .property-title {
+    font-size: 24px;
+    min-height: 0;
+  }
+
+  .property-price {
+    font-size: 32px;
+    min-height: 0;
+  }
+
+  .property-location {
+    min-height: 0;
+    line-height: 1.5;
+  }
+
+  .property-features {
+    min-height: 0;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 420px) {
+  .property-image {
+    height: 230px;
+  }
+
+  .property-content {
+    padding: 20px;
+  }
+
+  .property-title {
+    font-size: 22px;
+  }
+
+  .property-price {
+    font-size: 30px;
+  }
+}
