@@ -11,13 +11,11 @@ const FALLBACK_IMAGE = "images/logo.jpeg";
    LOADER
 ========================= */
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const loader = document.getElementById("loader");
 
   if (loader) {
-    setTimeout(() => {
-      loader.classList.add("hide");
-    }, 700);
+    loader.classList.add("hide");
   }
 });
 
@@ -96,9 +94,45 @@ function createWhatsAppLink(property) {
 ========================= */
 
 async function loadProperties() {
+  const isDetailsPage = Boolean(
+    document.querySelector(".details-page")
+  );
+
+  const homeFields = `
+    id,
+    title,
+    location,
+    country,
+    type,
+    price,
+    beds,
+    baths,
+    house_area,
+    land_area,
+    images,
+    created_at
+  `;
+
+  const detailsFields = `
+    id,
+    title,
+    location,
+    country,
+    type,
+    price,
+    beds,
+    baths,
+    house_area,
+    land_area,
+    parking,
+    description,
+    images,
+    created_at
+  `;
+
   const { data, error } = await supabaseClient
     .from("properties")
-    .select("*")
+    .select(isDetailsPage ? detailsFields : homeFields)
     .order("created_at", { ascending: false });
 
   if (error) {
@@ -305,7 +339,15 @@ propertiesToShow.forEach((property, index) => {
 
     card.innerHTML = `
       <div class="property-image">
-        <img src="${images[0]}" alt="${property.title || "Property"}">
+        <img
+  src="${images[0]}"
+  alt="${property.title || "Property"}"
+  loading="lazy"
+  decoding="async"
+  width="600"
+  height="400"
+  onerror="this.onerror=null;this.src='${FALLBACK_IMAGE}';"
+>
 
         <div class="property-badge ${badgeClass}">
           ${badgeText}
@@ -360,10 +402,10 @@ propertiesToShow.forEach((property, index) => {
 
     propertiesGrid.appendChild(card);
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       card.style.opacity = "1";
       card.style.transform = "translateY(0)";
-    }, 90 * index);
+    });
   });
   if (loadMoreBtn) {
 
@@ -631,8 +673,12 @@ function renderDetailsPage() {
 
   images.forEach((image, index) => {
     const thumb = document.createElement("img");
-    thumb.src = image;
-    thumb.className = "thumbnail-img";
+
+thumb.src = image;
+thumb.className = "thumbnail-img";
+thumb.loading = "lazy";
+thumb.decoding = "async";
+thumb.alt = `${property.title || "Property"} image ${index + 1}`;
 
     thumb.addEventListener("click", () => {
       currentImageIndex = index;
