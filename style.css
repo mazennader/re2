@@ -2185,62 +2185,116 @@ select{
   }
 }
 /* =========================================
-   FINAL PROPERTY IMAGE FIX
-   KEEP THIS AT THE VERY END OF style.css
+   FINAL PROFESSIONAL PROPERTY CARD FIX
+   NO CROP - NO STRETCH - SMALLER CARDS
 ========================================= */
 
 .properties-grid{
-  align-items:start;
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:28px;
+  align-items:start !important;
 }
 
 .property-card{
   display:flex;
   flex-direction:column;
+  height:auto !important;
+  align-self:start !important;
+
+  background:#121212;
+  border:1px solid var(--border);
+  border-radius:26px;
   overflow:hidden;
 }
 
 .property-image{
   position:relative;
   width:100%;
-  aspect-ratio:4 / 3;
+  height:auto !important;
+  aspect-ratio:auto !important;
+
   overflow:hidden;
-  background:#151515;
-  flex-shrink:0;
+  background:transparent !important;
+
+  display:block !important;
 }
 
 .property-image img{
   width:100% !important;
-  height:100% !important;
+  height:auto !important;
+  max-height:360px !important;
+
+  object-fit:contain !important;
+  object-position:center !important;
+
   display:block;
-  object-fit:cover !important;
-  object-position:center center !important;
-  transition:transform .5s ease;
+  margin:0 auto;
+
+  transform:none !important;
 }
 
 .property-card:hover .property-image img{
-  transform:scale(1.03);
+  transform:none !important;
 }
 
-/* Tablets */
+.property-content{
+  display:flex;
+  flex-direction:column;
+  padding:28px;
+  flex:1;
+}
 
-@media (max-width:1000px){
+.property-title{
+  min-height:0 !important;
+}
 
-  .property-image{
-    aspect-ratio:4 / 3;
+.property-location{
+  min-height:0 !important;
+}
+
+.property-price{
+  min-height:0 !important;
+}
+
+.property-features{
+  min-height:0 !important;
+}
+
+.card-buttons{
+  margin-top:28px !important;
+}
+
+/* Tablet */
+
+@media(max-width:1000px){
+
+  .properties-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:22px;
+  }
+
+  .property-image img{
+    max-height:330px !important;
   }
 
 }
 
-/* Phones */
+/* Mobile */
 
-@media (max-width:700px){
+@media(max-width:700px){
 
-  .property-image{
-    aspect-ratio:4 / 3;
+  .properties-grid{
+    grid-template-columns:1fr;
+    gap:24px;
   }
 
-  .property-card:hover .property-image img{
-    transform:none;
+  .property-image img{
+    max-height:300px !important;
+  }
+
+  .property-content{
+    padding:22px;
   }
 
 }
