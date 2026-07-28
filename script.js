@@ -23,10 +23,37 @@ document.addEventListener("DOMContentLoaded", () => {
    HELPERS
 ========================= */
 
-function formatPrice(price) {
-  if (!price) return "Price on request";
+function getCurrencyFromCountry(country) {
+  const value = String(country || "").toLowerCase();
 
-  return `$${Number(price).toLocaleString()}`;
+  if (value === "cyprus") return "EUR";
+  if (value === "dubai") return "AED";
+
+  return "USD";
+}
+
+function formatPrice(price, country) {
+  if (price === null || price === undefined || price === "") {
+    return "Price on request";
+  }
+
+  const amount = Number(price);
+
+  if (!Number.isFinite(amount)) {
+    return "Price on request";
+  }
+
+  const currency = getCurrencyFromCountry(country);
+
+  if (currency === "EUR") {
+    return `€${amount.toLocaleString("en-US")}`;
+  }
+
+  if (currency === "AED") {
+    return `AED ${amount.toLocaleString("en-US")}`;
+  }
+
+  return `$${amount.toLocaleString("en-US")}`;
 }
 function formatCountry(country) {
   const value = String(country || "").toLowerCase();
@@ -249,7 +276,10 @@ function renderProperties() {
   const searchTerm = searchInput.value.toLowerCase();
 
   let filtered = properties.filter((property) => {
-    const priceText = formatPrice(property.price).toLowerCase();
+    const priceText = formatPrice(
+      property.price,
+      property.country
+    ).toLowerCase();
     const areaText = getAreaText(property).toLowerCase();
     const numericPrice = getNumericPrice(property.price);
   
@@ -367,7 +397,7 @@ propertiesToShow.forEach((property, index) => {
 </div>
 
         <div class="property-price">
-          ${formatPrice(property.price)}
+        ${formatPrice(property.price, property.country)}
         </div>
 
         <div class="property-features">
@@ -627,7 +657,10 @@ function renderDetailsPage() {
 
   detailTitle.innerText = property.title || "Untitled Property";
   detailLocation.innerText = property.location || "Location on request";
-  detailPrice.innerText = formatPrice(property.price);
+  detailPrice.innerText = formatPrice(
+    property.price,
+    property.country
+  );
   detailDescription.innerText =
     property.description || "Description available upon request.";
 

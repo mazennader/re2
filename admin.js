@@ -37,6 +37,7 @@ const titleInput = document.getElementById("title");
 const locationInput = document.getElementById("location");
 const countryInput = document.getElementById("country");
 const priceInput = document.getElementById("price");
+const priceLabel = document.getElementById("priceLabel");
 const typeInput = document.getElementById("type");
 const bedsInput = document.getElementById("beds");
 const bathsInput = document.getElementById("baths");
@@ -168,7 +169,7 @@ function renderPropertiesList(list) {
 
         <div class="property-tags">
           <span class="gold-tag">
-            ${formatPrice(property.price)}
+          ${formatPrice(property.price, property.country)}
           </span>
 
           <span>
@@ -240,10 +241,66 @@ function handleAdminSearch() {
    HELPERS PART 1
 ========================= */
 
-function formatPrice(price) {
-  if (!price) return "Price on request";
+function getCurrencyFromCountry(country) {
+  const normalizedCountry = String(country || "").toLowerCase();
 
-  return `$${Number(price).toLocaleString()}`;
+  if (normalizedCountry === "cyprus") {
+    return {
+      code: "EUR",
+      symbol: "€",
+      label: "Price in EUR (€)",
+      placeholder: "Example: 450000",
+    };
+  }
+
+  if (normalizedCountry === "dubai") {
+    return {
+      code: "AED",
+      symbol: "AED",
+      label: "Price in AED",
+      placeholder: "Example: 1800000",
+    };
+  }
+
+  return {
+    code: "USD",
+    symbol: "$",
+    label: "Price in USD ($)",
+    placeholder: "Example: 560000",
+  };
+}
+
+function formatPrice(price, country) {
+  if (price === null || price === undefined || price === "") {
+    return "Price on request";
+  }
+
+  const amount = Number(price);
+
+  if (!Number.isFinite(amount)) {
+    return "Price on request";
+  }
+
+  const currency = getCurrencyFromCountry(country);
+
+  if (currency.code === "EUR") {
+    return `€${amount.toLocaleString("en-US")}`;
+  }
+
+  if (currency.code === "AED") {
+    return `AED ${amount.toLocaleString("en-US")}`;
+  }
+
+  return `$${amount.toLocaleString("en-US")}`;
+}
+
+function updateAdminPriceCurrency() {
+  if (!countryInput || !priceInput || !priceLabel) return;
+
+  const currency = getCurrencyFromCountry(countryInput.value);
+
+  priceLabel.innerText = currency.label;
+  priceInput.placeholder = currency.placeholder;
 }
 
 function formatType(type) {
@@ -526,6 +583,7 @@ function attachPropertyActionEvents() {
     locationInput.value = property.location || "";
     countryInput.value = property.country || "lebanon";
     priceInput.value = property.price || "";
+    updateAdminPriceCurrency();
     typeInput.value = property.type || "sale";
   
     bedsInput.value = property.beds || 0;
@@ -620,6 +678,7 @@ function attachPropertyActionEvents() {
   function resetForm() {
     propertyForm.reset();
     countryInput.value = "lebanon";
+    updateAdminPriceCurrency();
   
     propertyIdInput.value = "";
     editingPropertyId = null;
@@ -731,11 +790,17 @@ function showAlert(message, type = "info") {
       window.location.href = "jcr-login-2026.html";
     });
   }
+  if (countryInput) {
+    countryInput.addEventListener("change", updateAdminPriceCurrency);
+  }
   /* =========================
      START ADMIN
   ========================= */
   
   window.addEventListener("DOMContentLoaded", async () => {
     await protectAdminPage();
+  
+    updateAdminPriceCurrency();
+  
     loadAdminProperties();
   });
