@@ -44,6 +44,8 @@ const bathsInput = document.getElementById("baths");
 const parkingInput = document.getElementById("parking");
 const houseAreaInput = document.getElementById("houseArea");
 const landAreaInput = document.getElementById("landArea");
+const houseAreaLabel = document.getElementById("houseAreaLabel");
+const landAreaLabel = document.getElementById("landAreaLabel");
 const descriptionInput = document.getElementById("description");
 const propertyImagesInput = document.getElementById("propertyImages");
 
@@ -301,8 +303,25 @@ function updateAdminPriceCurrency() {
 
   priceLabel.innerText = currency.label;
   priceInput.placeholder = currency.placeholder;
-}
 
+  if (countryInput.value === "dubai") {
+
+    houseAreaLabel.innerText = "House Area (sq ft)";
+    landAreaLabel.innerText = "Land Area (sq ft)";
+
+    houseAreaInput.placeholder = "Example: 3200 sq ft";
+    landAreaInput.placeholder = "Example: 5000 sq ft";
+
+  } else {
+
+    houseAreaLabel.innerText = "House Area (m²)";
+    landAreaLabel.innerText = "Land Area (m²)";
+
+    houseAreaInput.placeholder = "Example: 320 m²";
+    landAreaInput.placeholder = "Example: 800 m²";
+
+  }
+}
 function formatType(type) {
   if (type === "sale") return "Villa / For Sale";
   if (type === "rent") return "Rental";
@@ -801,6 +820,7 @@ function showAlert(message, type = "info") {
     await protectAdminPage();
   
     updateAdminPriceCurrency();
+
   
     loadAdminProperties();
   });
