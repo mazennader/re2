@@ -91,21 +91,26 @@ function getImages(property) {
 
   return [FALLBACK_IMAGE];
 }
+function getAreaUnit(country) {
+  const value = String(country || "").toLowerCase();
 
+  return value === "dubai" ? "sq ft" : "m²";
+}
 function getAreaText(property) {
   const houseArea = property.house_area;
   const landArea = property.land_area;
+  const unit = getAreaUnit(property.country);
 
   if (houseArea && landArea) {
-    return `House: ${houseArea} | Land: ${landArea}`;
+    return `House: ${houseArea} ${unit} | Land: ${landArea} ${unit}`;
   }
 
   if (houseArea) {
-    return `House: ${houseArea}`;
+    return `House: ${houseArea} ${unit}`;
   }
 
   if (landArea) {
-    return `Land: ${landArea}`;
+    return `Land: ${landArea} ${unit}`;
   }
 
   return "Area on request";
@@ -668,19 +673,31 @@ function renderDetailsPage() {
 
   document.getElementById("detailBeds").innerText = property.beds || 0;
   document.getElementById("detailBaths").innerText = property.baths || 0;
-  document.getElementById("detailHouseArea").innerText =
-    property.house_area || "-";
-  document.getElementById("detailLandArea").innerText =
-    property.land_area || "-";
+  const areaUnit = getAreaUnit(property.country);
+
+document.getElementById("detailHouseArea").innerText =
+  property.house_area
+    ? `${property.house_area} ${areaUnit}`
+    : "-";
+
+document.getElementById("detailLandArea").innerText =
+  property.land_area
+    ? `${property.land_area} ${areaUnit}`
+    : "-";
   document.getElementById("detailParking").innerText = property.parking || 0;
 
   document.getElementById("sideType").innerText = getBadgeText(property.type);
   document.getElementById("sideBeds").innerText = property.beds || 0;
   document.getElementById("sideBaths").innerText = property.baths || 0;
   document.getElementById("sideHouseArea").innerText =
-    property.house_area || "-";
-  document.getElementById("sideLandArea").innerText =
-    property.land_area || "-";
+  property.house_area
+    ? `${property.house_area} ${areaUnit}`
+    : "-";
+
+document.getElementById("sideLandArea").innerText =
+  property.land_area
+    ? `${property.land_area} ${areaUnit}`
+    : "-";
   document.getElementById("sideParking").innerText =
     `${property.parking || 0} Spaces`;
 
