@@ -2298,3 +2298,45 @@ select{
   }
 
 }
+/* =========================================
+   PROPERTY DETAILS - FULL IMAGE NO CROPPING
+========================================= */
+
+.main-image-wrap{
+  height:auto !important;
+  min-height:420px;
+  background:#111;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.main-image-wrap img{
+  width:100% !important;
+  height:auto !important;
+  max-height:720px !important;
+
+  object-fit:contain !important;
+  object-position:center !important;
+
+  display:block;
+  margin:auto;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+  .main-image-wrap{
+    height:auto !important;
+    min-height:220px;
+  }
+
+  .main-image-wrap img{
+    width:100% !important;
+    height:auto !important;
+    max-height:520px !important;
+    object-fit:contain !important;
+  }
+
+}
